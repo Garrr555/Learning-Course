@@ -28,7 +28,7 @@ export default function AddNewCourseDialog({ children }: any) {
     name: "",
     description: "",
     includeVideo: false,
-    noOfChapter: 1,
+    noOfChapters: 1,
     category: "",
     level: "",
   });
@@ -77,7 +77,7 @@ export default function AddNewCourseDialog({ children }: any) {
                   placeholder="No of chapters"
                   type="number"
                   onChange={(event) =>
-                    onHandleInputChange("noOfChapter", event?.target.value)
+                    onHandleInputChange("noOfChapters", event?.target.value)
                   }
                 />
               </div>
