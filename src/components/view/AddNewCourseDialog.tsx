@@ -25,6 +25,7 @@ import { useState } from "react";
 import axios from "axios";
 import { toast } from "sonner";
 import { v4 as uuidv4 } from "uuid";
+import { useRouter } from "next/navigation";
 
 export default function AddNewCourseDialog({ children }: any) {
   const [loading, setLoading] = useState(false);
@@ -36,6 +37,7 @@ export default function AddNewCourseDialog({ children }: any) {
     category: "",
     level: "",
   });
+  const router = useRouter();
 
   const onHandleInputChange = (field: any, value: any) => {
     setFormData((prev) => ({
@@ -47,7 +49,7 @@ export default function AddNewCourseDialog({ children }: any) {
 
   const onGenerate = async () => {
     console.log(formData);
-    const courseId=uuidv4();
+    const courseId = uuidv4();
     try {
       setLoading(true);
       const result = await axios.post("/api/generate-course-layout", {
@@ -57,6 +59,7 @@ export default function AddNewCourseDialog({ children }: any) {
       console.log(result.data);
       setLoading(false);
       toast.success("Generating course layout");
+      router.push(`/workspace/edit-course/` + result.data?.courseId);
     } catch (err) {
       console.log(err);
       setLoading(false);
