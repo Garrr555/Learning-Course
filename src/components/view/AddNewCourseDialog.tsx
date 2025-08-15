@@ -20,10 +20,14 @@ import {
   SelectValue,
 } from "../ui/select";
 import { Button } from "../ui/button";
-import { Sparkle } from "lucide-react";
+import { Loader2Icon, Sparkle } from "lucide-react";
 import { useState } from "react";
+import axios from "axios";
+import { toast } from "sonner";
+import { v4 as uuidv4 } from "uuid";
 
 export default function AddNewCourseDialog({ children }: any) {
+  const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     description: "",
@@ -41,8 +45,23 @@ export default function AddNewCourseDialog({ children }: any) {
     console.log(formData);
   };
 
-  const onGenerate = () => {
+  const onGenerate = async () => {
     console.log(formData);
+    const courseId=uuidv4();
+    try {
+      setLoading(true);
+      const result = await axios.post("/api/generate-course-layout", {
+        ...formData,
+        courseId: courseId,
+      });
+      console.log(result.data);
+      setLoading(false);
+      toast.success("Generating course layout");
+    } catch (err) {
+      console.log(err);
+      setLoading(false);
+      toast.error("Something went wrong");
+    }
   };
 
   return (
@@ -120,9 +139,15 @@ export default function AddNewCourseDialog({ children }: any) {
               <div className="mt-5">
                 <Button
                   onClick={onGenerate}
+                  disabled={loading}
                   className="w-full bg-gradient-to-tr hover:bg-gradient-to-bl from-blue-500 to-purple-500  "
                 >
-                  <Sparkle /> Generate Course
+                  {loading ? (
+                    <Loader2Icon className="animate-spin" />
+                  ) : (
+                    <Sparkle />
+                  )}{" "}
+                  Generate Course
                 </Button>
               </div>
             </div>
