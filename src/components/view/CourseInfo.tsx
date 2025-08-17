@@ -1,11 +1,39 @@
+"use client";
+
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { Book, Clock, Settings, TrendingUp } from "lucide-react";
+import { Book, Clock, Loader2Icon, Settings, TrendingUp } from "lucide-react";
 import Image from "next/image";
 import { Button } from "../ui/button";
+import { useState } from "react";
+import axios from "axios";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 export default function CourseInfo({ course }: any) {
   const courseLayout = course?.courseJson?.course;
+  const [loading, setLoading] = useState(false);
+  const router = useRouter();
+
+  const GenerateGetCourseContent = async () => {
+    // generate course content
+    setLoading(true);
+    try {
+      const result = await axios.post("/api/generate-course-content", {
+        courseJson: courseLayout,
+        courseTitle: course?.name,
+        courseId: course?.cid,
+      });
+      console.log(result.data);
+      setLoading(false);
+      router.replace("/workspace");
+      toast.success("Generating course content");
+    } catch (err) {
+      console.log(err);
+      setLoading(false);
+      toast.error("Something went wrong");
+    }
+  };
   return (
     <div className="flex flex-col-reverse lg:flex-row-reverse gap-5 justify-between p-5 rounded-2xl shadow">
       <div className="flex flex-col gap-3">
@@ -36,7 +64,20 @@ export default function CourseInfo({ course }: any) {
             </section>
           </div>
         </div>
-        <Button className="bg-purple-500 max-w-sm"><Settings/> Generate Content</Button>
+        <Button
+          onClick={GenerateGetCourseContent}
+          className="bg-green-600 max-w-full"
+        >
+          {loading ? (
+            <div className="flex gap-2 items-center animate-spin">
+              <Loader2Icon />
+            </div>
+          ) : (
+            <div className="flex gap-2 items-center">
+              <Settings /> Generate Content
+            </div>
+          )}
+        </Button>
       </div>
       <Image
         src={course?.bannerImageUrl || "/online-education.jpg"}

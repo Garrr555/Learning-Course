@@ -10,7 +10,7 @@ export default function ChapterTopicList({ course }: any) {
       <div className="flex flex-col items-center justify-center mt-10">
         {courseLayout?.chapters?.map((chapter: any, index: number) => (
           <div key={index}>
-            <div className="bg-gradient-to-b from-red-500 via-white to-blue-500 p-4 border shadow rounded-xl ">
+            <div className="bg-gradient-to-tr text-white from-blue-200 via-blue-500 to-purple-500 p-4 border shadow rounded-xl ">
               <h2 className="text-center">Chapter {index + 1}</h2>
               <h2 className="font-bold text-lg text-center">
                 {chapter.chapterName}
@@ -32,7 +32,9 @@ export default function ChapterTopicList({ course }: any) {
                     >
                       {topic}
                     </span>
-                    <h2 className="text-center rounded-full bg-gray-300 px-6 text-gray-500 p-4">{index + 1}</h2>
+                    <h2 className="text-center rounded-full bg-gray-300 px-6 text-gray-500 p-4">
+                      {index + 1}
+                    </h2>
                     <span
                       className={`${
                         index % 2 != 0 && "text-transparent"
@@ -58,7 +60,7 @@ export default function ChapterTopicList({ course }: any) {
           </div>
         ))}
         <div className="p-4 border shadow rounded-xl bg-green-600 text-white">
-            <h2>Finish</h2>
+          <h2>Finish</h2>
         </div>
       </div>
     </div>

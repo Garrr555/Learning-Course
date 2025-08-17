@@ -28,13 +28,14 @@ const PROMPT = `Genrate Learning Course depends on following details. In which M
     }
 }, User Input`;
 
+export const ai = new GoogleGenAI({
+  apiKey: process.env.GEMINI_API_KEY,
+});
+
 export async function POST(req: Request) {
   const { courseId, ...formData } = await req.json();
   const user = await currentUser();
 
-  const ai = new GoogleGenAI({
-    apiKey: process.env.GEMINI_API_KEY,
-  });
   const config = {
     responseMimeType: "text/plain",
   };
@@ -60,6 +61,7 @@ export async function POST(req: Request) {
   const RawResp = response?.candidates?.[0]?.content?.parts?.[0]?.text;
   const RawJson = RawResp?.replace("```json", "").replace("```", "") ?? "";
   const JSONResp = JSON.parse(RawJson);
+  
   const ImagePrompt = JSONResp.course?.bannerImagePrompt;
 
   //generate Image
