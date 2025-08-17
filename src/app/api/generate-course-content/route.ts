@@ -1,9 +1,9 @@
 import { NextResponse } from "next/server";
-import { ai } from "../generate-course-layout/route";
 import axios from "axios";
 import { db } from "@/config/db";
 import { courseTable } from "@/config/schema";
 import { eq } from "drizzle-orm";
+import { GoogleGenAI } from "@google/genai";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 const PROPMT = `Depends on Chapter name and Topic Generate content for each topic in HTML and give response in JSON format.
@@ -15,6 +15,10 @@ content:<>
 }
 }
 : User Input`;
+
+export const ai = new GoogleGenAI({
+  apiKey: process.env.GEMINI_API_KEY,
+});
 
 export async function POST(req: Request) {
   const { courseJson, courseTitle, courseId } = await req.json();
@@ -67,7 +71,7 @@ export async function POST(req: Request) {
     .where(eq(courseTable.cid, courseId))
     .returning();
 
-    console.log(dbResp);
+  console.log(dbResp);
 
   return NextResponse.json({
     courseName: courseTitle,
