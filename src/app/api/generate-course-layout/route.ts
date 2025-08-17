@@ -28,7 +28,7 @@ const PROMPT = `Genrate Learning Course depends on following details. In which M
     }
 }, User Input`;
 
-export const ai = new GoogleGenAI({
+const ai = new GoogleGenAI({
   apiKey: process.env.GEMINI_API_KEY,
 });
 

@@ -16,7 +16,7 @@ content:<>
 }
 : User Input`;
 
-export const ai = new GoogleGenAI({
+const ai = new GoogleGenAI({
   apiKey: process.env.GEMINI_API_KEY,
 });
 
