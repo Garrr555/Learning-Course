@@ -24,7 +24,7 @@ export default function CourseList() {
   };
   return (
     <div className="mt-10">
-      <h2 className="font-bold text-3xl">Course List</h2>
+      <h2 className="font-bold text-xl mb-5">Course List</h2>
 
       {courseList?.length === 0 ? (
         <div className=" flex flex-col p-7 items-center justify-center border rounded-xl mt-2 bg-secondary">
