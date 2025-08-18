@@ -1,13 +1,27 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BookOpenText } from "lucide-react";
 import { Button } from "../ui/button";
 import AddNewCourseDialog from "./AddNewCourseDialog";
+import axios from "axios";
+import { useUser } from "@clerk/nextjs";
+import CourseCard from "./CourseCard";
 
 export default function CourseList() {
   const [courseList, setCourseList] = useState([]);
+  const { user } = useUser();
+
+  useEffect(() => {
+    user && GetCourseList();
+  }, [user]);
+
+  const GetCourseList = async () => {
+    const result = await axios.get("/api/courses");
+    console.log(result);
+    setCourseList(result.data);
+  };
   return (
     <div className="mt-10">
       <h2 className="font-bold text-3xl">Course List</h2>
@@ -35,7 +49,11 @@ export default function CourseList() {
           </AddNewCourseDialog>
         </div>
       ) : (
-        <div>List of Course</div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-5">
+          {courseList?.map((course, index: number) => (
+            <CourseCard key={index} course={course} />
+          ))}
+        </div>
       )}
     </div>
   );
