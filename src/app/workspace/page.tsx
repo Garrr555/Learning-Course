@@ -7,7 +7,7 @@ export default function Workspace() {
   return (
     <div>
       <WelcomeBanner />
-      <EnrollCourseList/>
+      <EnrollCourseList />
       <CourseList />
     </div>
   );

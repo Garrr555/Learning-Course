@@ -43,11 +43,13 @@ export default function CourseCard({ course }: any) {
         alt={course?.name}
         className="w-full aspect-video h-[250px] object-cover rounded-t-xl"
       />
-      <div className="p-3 flex flex-col gap-3">
-        <h2 className="font-bold text-lg">{courseJson?.name}</h2>
-        <p className="line-clamp-3 text-justify text-gray-400 text-sm">
-          {courseJson?.description}
-        </p>
+      <div className="p-3 flex flex-col gap-3 justify-between min-h-60">
+        <div>
+          <h2 className="font-bold text-lg">{courseJson?.name}</h2>
+          <p className="line-clamp-3 text-justify text-gray-400 text-sm">
+            {courseJson?.description}
+          </p>
+        </div>
         <div className="flex justify-between items-center">
           <h2 className="flex items-center gap-2 text-sm">
             <Book className="text-purple-600 h-5 w-5" />{" "}

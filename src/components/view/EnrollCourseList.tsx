@@ -3,6 +3,7 @@
 
 import axios from "axios";
 import { useEffect, useState } from "react";
+import EnrollCourseCard from "./EnrollCourseCard";
 
 export default function EnrollCourseList() {
   const [enrolledCourseList, setEnrolledCourseList] = useState([]);
@@ -18,12 +19,18 @@ export default function EnrollCourseList() {
   };
   return (
     enrolledCourseList?.length > 0 && (
-      <div className="mt-3">
-        <h2 className="font-bold text-xl">Continue Learning your courses</h2>
+      <div className="mt-10">
+        <h2 className="font-bold text-xl mb-5">Continue Learning your courses</h2>
 
-        {enrolledCourseList?.map((course: any, index: number) => (
-          <div key={index}></div>
-        ))}
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
+          {enrolledCourseList?.map((course: any, index: number) => (
+            <EnrollCourseCard
+              key={index}
+              course={course?.courses}
+              enrollCourse={course?.enrollCourse}
+            />
+          ))}
+        </div>
       </div>
     )
   );
