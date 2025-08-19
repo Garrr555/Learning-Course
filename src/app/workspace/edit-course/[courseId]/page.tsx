@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import ChapterTopicList from "@/components/view/ChapterTopicList";
@@ -6,7 +7,7 @@ import axios from "axios";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
-export default function EditCourse() {
+export default function EditCourse({ viewCourse = false }: any) {
   const { courseId } = useParams();
   const [loading, setLoading] = useState(false);
   const [course, setCourse] = useState({});
@@ -24,7 +25,7 @@ export default function EditCourse() {
 
   return (
     <div>
-      <CourseInfo course={course} />
+      <CourseInfo course={course} viewCourse={viewCourse} />
       <ChapterTopicList course={course} />
     </div>
   );

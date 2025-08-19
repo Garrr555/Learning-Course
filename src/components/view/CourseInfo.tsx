@@ -2,15 +2,29 @@
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { Book, Clock, Loader2Icon, Settings, TrendingUp } from "lucide-react";
+import {
+  Book,
+  Clock,
+  Loader2Icon,
+  PlayCircle,
+  Settings,
+  TrendingUp,
+} from "lucide-react";
 import Image from "next/image";
 import { Button } from "../ui/button";
 import { useState } from "react";
 import axios from "axios";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
-export default function CourseInfo({ course }: any) {
+export default function CourseInfo({
+  course,
+  viewCourse,
+}: {
+  course: any;
+  viewCourse: boolean;
+}) {
   const courseLayout = course?.courseJson?.course;
   const [loading, setLoading] = useState(false);
   const router = useRouter();
@@ -35,7 +49,7 @@ export default function CourseInfo({ course }: any) {
     }
   };
   return (
-    <div className="flex flex-col-reverse lg:flex-row-reverse gap-5 justify-between p-5 rounded-2xl shadow">
+    <div className="flex flex-col-reverse lg:flex-row gap-5 justify-between p-5 rounded-2xl shadow">
       <div className="flex flex-col gap-3">
         <h2 className="font-bold text-3xl">{courseLayout?.name}</h2>
         <p className="line-clamp-2 text-gray-500">
@@ -64,20 +78,28 @@ export default function CourseInfo({ course }: any) {
             </section>
           </div>
         </div>
-        <Button
-          onClick={GenerateGetCourseContent}
-          className="bg-green-600 max-w-full"
-        >
-          {loading ? (
-            <div className="flex gap-2 items-center animate-spin">
-              <Loader2Icon />
-            </div>
-          ) : (
-            <div className="flex gap-2 items-center">
-              <Settings /> Generate Content
-            </div>
-          )}
-        </Button>
+        {!viewCourse ? (
+          <Button
+            onClick={GenerateGetCourseContent}
+            className="bg-green-600 max-w-full"
+          >
+            {loading ? (
+              <div className="flex gap-2 items-center animate-spin">
+                <Loader2Icon />
+              </div>
+            ) : (
+              <div className="flex gap-2 items-center">
+                <Settings /> Generate Content
+              </div>
+            )}
+          </Button>
+        ) : (
+          <Link href={`/course/${course?.cid}`}>
+            <Button className="bg-green-600 w-full">
+              <PlayCircle /> Continue Learning
+            </Button>
+          </Link>
+        )}
       </div>
       <Image
         src={course?.bannerImageUrl || "/online-education.jpg"}

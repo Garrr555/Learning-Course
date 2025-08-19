@@ -37,7 +37,7 @@ export default function EnrollCourseCard({ course, enrollCourse }: any) {
             className="bg-purple-200"
             bgBar="bg-purple-600"
           />
-          <Link href={`/workspace/course/${course?.cid}`}>
+          <Link href={`/workspace/view-course/${course?.cid}`}>
             <Button className="w-full mt-3 bg-purple-500">
               <PlayCircle />
               Continue Learning
