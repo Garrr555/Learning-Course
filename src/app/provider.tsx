@@ -3,6 +3,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
+import { SelectedChapterIndexContext } from "@/context/SelectedChapterIndexContext";
 import { UserDetailContext } from "@/context/UserDetailContext";
 import { useUser } from "@clerk/nextjs";
 import axios from "axios";
@@ -11,6 +12,7 @@ import { useEffect, useState } from "react";
 export default function Provider({ children }: any) {
   const { user } = useUser();
   const [userDetail, setUserDetail] = useState();
+  const [selectedChapterIndex, setSelectedChapterIndex] = useState(0);
   console.log(user);
 
   useEffect(() => {
@@ -29,7 +31,11 @@ export default function Provider({ children }: any) {
 
   return (
     <UserDetailContext.Provider value={{ userDetail, setUserDetail }}>
-      <div>{children}</div>
+      <SelectedChapterIndexContext.Provider
+        value={{ selectedChapterIndex, setSelectedChapterIndex }}
+      >
+        <div>{children}</div>
+      </SelectedChapterIndexContext.Provider>
     </UserDetailContext.Provider>
   );
 }
