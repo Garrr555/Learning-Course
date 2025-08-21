@@ -9,9 +9,10 @@ export default function EnrollCourseCard({ course, enrollCourse }: any) {
   const courseJson = course?.courseJson?.course;
 
   const CalculatePerProgress = () => {
-    return (
-      (enrollCourse?.completedChapsters?.length ??
-        0 / course?.courseContent?.length) * 100
+    return Math.round(
+      (enrollCourse?.completedChapsters?.length /
+        course?.courseContent?.length) *
+        100
     );
   };
   return (

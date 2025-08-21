@@ -28,7 +28,10 @@ export default function Course() {
           <ChapterListSidebar courseInfo={courseInfo} />
         </div>
         <div className="flex-1">
-          <ChapterContent courseInfo={courseInfo} />
+          <ChapterContent
+            courseInfo={courseInfo}
+            refreshData={() => GetEnrollCourseById()}
+          />
         </div>
       </div>
     </div>

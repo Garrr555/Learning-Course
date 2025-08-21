@@ -75,3 +75,31 @@ export async function GET(req: Request) {
     return NextResponse.json(result);
   }
 }
+
+export async function PUT(req: Request) {
+  const { completedChapter, courseId } = await req.json();
+  const user = await currentUser();
+
+  const result = await db
+    .update(enrollCourseTable)
+    .set({
+      completedChapsters: completedChapter,
+    })
+    .where(
+      and(
+        eq(enrollCourseTable.cid, courseId),
+        eq(
+          enrollCourseTable.userEmail,
+          user?.primaryEmailAddress?.emailAddress ?? ""
+        )
+      )
+    )
+    .returning({
+      id: enrollCourseTable.id,
+      cid: enrollCourseTable.cid,
+      userEmail: enrollCourseTable.userEmail,
+      completedChapsters: enrollCourseTable.completedChapsters,
+    });
+
+  return NextResponse.json(result);
+}

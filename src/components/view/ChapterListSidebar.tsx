@@ -1,3 +1,4 @@
+/* eslint-disable prefer-const */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   Accordion,
@@ -6,6 +7,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { SelectedChapterIndexContext } from "@/context/SelectedChapterIndexContext";
+import { CheckCircle } from "lucide-react";
 import { useContext } from "react";
 
 export default function ChapterListSidebar({ courseInfo }: any) {
@@ -15,6 +17,7 @@ export default function ChapterListSidebar({ courseInfo }: any) {
   const { selectedChapterIndex, setSelectedChapterIndex }: any = useContext(
     SelectedChapterIndexContext
   );
+  let completedChapter = enrollCourse?.completedChapsters ?? [];
 
   return (
     <div className="w-80 bg-gray-100 h-screen p-5">
@@ -29,14 +32,22 @@ export default function ChapterListSidebar({ courseInfo }: any) {
             onClick={() => setSelectedChapterIndex(index)}
           >
             <AccordionTrigger className="font-medium text-lg">
-              {index + 1}. {chapter?.courseData?.chapterName}
+              <span>{!completedChapter.includes(index) ? index + 1 : <CheckCircle className="text-green-600"/>}</span>. {chapter?.courseData?.chapterName}
             </AccordionTrigger>
             <AccordionContent asChild>
               <div className="">
                 {chapter?.courseData?.topics.map(
-                  (topic: any, index: number) => (
-                    <h2 key={index} className="p-3 bg-white my-1 rounded-lg">
-                      - {topic?.topic}
+                  (topic: any, index_: number) => (
+                    <h2
+                      key={index_}
+                      className={`p-3 my-1 rounded-lg  ${
+                        completedChapter.includes(index)
+                          ? "bg-green-100 text-green-800"
+                          : "bg-white"
+                      }`}
+                    >
+                      {completedChapter.includes(index) && "✅"}
+                      {topic?.topic}
                     </h2>
                   )
                 )}
