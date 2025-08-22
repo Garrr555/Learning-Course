@@ -30,7 +30,7 @@ export const SideBarOptions = [
   {
     title: "Billing",
     icon: LayoutDashboard,
-    path: "/#",
+    path: "/workspace/billing",
   },
   {
     title: "Profile",

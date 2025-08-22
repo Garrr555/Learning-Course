@@ -57,6 +57,10 @@ export default function AddNewCourseDialog({ children }: any) {
         courseId: courseId,
       });
       console.log(result.data);
+      if (result.data.resp == "limit reached") {
+        toast.warning("Please upgrade your plan");
+        router.push(`/workspace/billing`);
+      }
       setLoading(false);
       toast.success("Generating course layout");
       router.push(`/workspace/edit-course/` + result.data?.courseId);
