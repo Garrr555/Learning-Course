@@ -26,9 +26,11 @@ export function AppSidebar() {
       <SidebarHeader className="p-4 flex">
         <div className="flex items-center gap-2">
           <Image src={"/logo3.svg"} alt="logo" width={40} height={40} />
-          <p className="text-3xl font-bold bg-gradient-to-b from-purple-500 via-blue-500 to-blue-300 bg-clip-text text-transparent">
-            One Peace
-          </p>
+          <Link href={"/"}>
+            <p className="text-3xl font-bold bg-gradient-to-b from-purple-500 via-blue-500 to-blue-300 bg-clip-text text-transparent">
+              One Peace
+            </p>
+          </Link>
         </div>
       </SidebarHeader>
       <SidebarContent className="px-2">
@@ -52,7 +54,7 @@ export function AppSidebar() {
                     asChild
                     disabled={path.includes(item.path)}
                     className={`p-5 text-[18px] font-semibold hover:text-white ${
-                      path.includes(item.path)
+                      path === item.path
                         ? "text-white bg-gradient-to-l from-purple-300 via-blue-300 to-blue-200 transition-all duration-300"
                         : " hover:translate-x-2 hover:bg-gradient-to-r from-purple-200 via-blue-200 to-blue-100 transition-all duration-300 ease-in-out"
                     }`}

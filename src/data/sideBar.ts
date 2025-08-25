@@ -15,12 +15,12 @@ export const SideBarOptions = [
   {
     title: "My Learning",
     icon: Book,
-    path: "/workspace/my-course",
+    path: "/workspace/my-learning",
   },
   {
     title: "Explore Course",
     icon: Compass,
-    path: "/#",
+    path: "/workspace/explore",
   },
   {
     title: "AI Tools",
@@ -35,6 +35,6 @@ export const SideBarOptions = [
   {
     title: "Profile",
     icon: UserCircle2Icon,
-    path: "/#",
+    path: "/workspace/profile",
   },
 ];

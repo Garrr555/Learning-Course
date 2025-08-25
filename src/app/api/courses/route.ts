@@ -1,7 +1,7 @@
 import { db } from "@/config/db";
 import { courseTable } from "@/config/schema";
 import { currentUser } from "@clerk/nextjs/server";
-import { desc, eq } from "drizzle-orm";
+import { desc, eq, ne, sql } from "drizzle-orm";
 import { NextResponse } from "next/server";
 
 export async function GET(req: Request) {
@@ -9,15 +9,48 @@ export async function GET(req: Request) {
   const courseId = searchParams?.get("courseId");
   const user = await currentUser();
 
+  // if (Number(courseId) == 0) {
+  //   const result = await db
+  //     .select()
+  //     .from(courseTable)
+  //     .where(sql`${courseTable.courseContent}::jsonb != '{}'::jsonb`);
+
+  //   console.log(result);
+
+  //   return NextResponse.json(result);
+  // }
+
+  // if (courseId) {
+  //   const result = await db
+  //     .select()
+  //     .from(courseTable)
+  //     .where(eq(courseTable.cid, courseId));
+
+  //   console.log(result);
+
+  //   return NextResponse.json(result[0]);
+  // }
+
   if (courseId) {
-    const result = await db
-      .select()
-      .from(courseTable)
-      .where(eq(courseTable.cid, courseId));
+    if (Number(courseId) == 0) {
+      const result = await db
+        .select()
+        .from(courseTable)
+        .where(sql`${courseTable.courseContent}::jsonb != '{}'::jsonb`);
 
-    console.log(result);
+      console.log(result);
 
-    return NextResponse.json(result[0]);
+      return NextResponse.json(result);
+    } else {
+      const result = await db
+        .select()
+        .from(courseTable)
+        .where(eq(courseTable.cid, courseId));
+
+      console.log(result);
+
+      return NextResponse.json(result[0]);
+    }
   } else {
     const result = await db
       .select()
